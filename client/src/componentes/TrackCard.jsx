@@ -11,12 +11,10 @@ export default function TrackCard({ track }) {
 
   return (
 
-    <div onClick={handleClick} style={styles.card}>
+    <div onClick={() => { playTrack(track); handleClick(); }} style={styles.card}>
       <img src={track.album.cover_medium} alt={track.title} style={styles.image} />
       <p>{track.title}</p>
-      <button onClick={() => playTrack(track)} style={styles.button}>
-      {isPlaying ? " > " : " > "}
-      </button>
+      
     </div>
     
   );
