@@ -35,7 +35,7 @@ useEffect(() => {
   useEffect(() => {
     const fetchTrack = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/track/${id}`);
+        const response = await axios.get(`/api/track/${id}`);
         setTrack(response.data);
       } catch (error) {
         console.error("Erro ao buscar detalhes da música:", error);
