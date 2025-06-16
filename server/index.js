@@ -59,6 +59,21 @@ app.get("/api/chart/global", async (req, res) => {
 
 
 
+// Endpoint to get lyrics by artist and title
+app.get("/api/lyrics/:artist/:title", async (req, res) => {
+  const { artist, title } = req.params;
+  try {
+    const response = await axios.get(`https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}`);
+    if (response.data && response.data.lyrics) {
+      res.json({ lyrics: response.data.lyrics });
+    } else {
+      res.status(404).json({ lyrics: "Letra não encontrada." });
+    }
+  } catch (error) {
+    res.status(500).json({ lyrics: "Erro ao buscar letra da música." });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
