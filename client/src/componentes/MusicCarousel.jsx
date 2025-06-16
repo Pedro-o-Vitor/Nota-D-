@@ -64,7 +64,7 @@ export default function MusicCarousel({ title, apiEndpoint }) {
 const styles = {
   container: {
     padding: "2rem",
-    backgroundColor: "Black",
+    backgroundColor: "#181818",
     color: "#fff"
   },
 };

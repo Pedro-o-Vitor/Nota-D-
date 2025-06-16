@@ -34,14 +34,15 @@ export default function HomePage() {
 const style = {
   container: {
     padding: "2rem",
-    backgroundColor: "black",
+    backgroundColor: "#181818",
     color: "#fff",
     minHeight: "100vh"
   },
   heading: {
     textAlign: "center",
     marginBottom: "1rem",
-    fontSize: "1.8rem"
+    fontSize: "1.8rem",
+    Color:"#d1d1d1",
   }
 };
 

@@ -22,6 +22,7 @@ export default function LoginPage() {
     localStorage.setItem('senhaCadastrada', password);
     alert('Cadastro realizado com sucesso!');
     setPage('login');
+    setForm({ email: '', password: '', username: '' }); // Reset form after registration
   };
 
   const handleLogin = (e) => {
@@ -122,8 +123,8 @@ const styles = {
     backgroundColor: 'transparent',
     padding: '50px',
     borderRadius: '12px',
-    border: '2px solid #FF10F0',
-    boxShadow: '0 0 20px #FF10F0',
+    border: '2px solid #1E1E1E',
+    boxShadow: '0 0 20px #1E1E1E',
     textAlign: 'center',
     width: '250px',
     margin: '250px',
@@ -133,18 +134,18 @@ const styles = {
     padding: '12px',
     margin: '10px 0',
     backgroundColor: 'transparent',
-    border: '2px solid #FF10F0',
+    border: '2px solid #1E1E1E',
     borderRadius: '8px',
     color: 'white',
     outline: 'none',
   },
   submitInput: {
-    backgroundColor: '#FF10F0',
+    backgroundColor: '#white',
     color: '#000000',
     fontWeight: 'bold',
     cursor: 'pointer',
     transition: '0.3s ease',
-    boxShadow: '0 0 10px #FF10F0, 0 0 20px #FF10F0',
+    boxShadow: '0 0 10px #white, 0 0 20px white',
     width: '80%',
     padding: '12px',
     margin: '10px 0',
@@ -153,17 +154,16 @@ const styles = {
   },
   h1: {
     textAlign: 'center',
-    color: '#FF10F0',
+    color: 'white',
   },
   button: {
-    backgroundColor: '#FF10F0',
+    backgroundColor: '#1E1E1E',
     border: 'none',
     padding: '10px 20px',
     borderRadius: '8px',
-    color: '#000',
+    color: 'white',
     fontWeight: 'bold',
     cursor: 'pointer',
-    boxShadow: '0 0 10px ',
     transition: '0.3s ease',
     margin: '10px',
   },

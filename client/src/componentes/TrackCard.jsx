@@ -28,7 +28,7 @@ const styles = {
   card: {
     cursor: "pointer",
     padding: "1rem",
-    backgroundColor: "Black",
+    backgroundColor: "#181818",
     textAlign: "center",
     color: "white",
     fontFamily: "Arial",

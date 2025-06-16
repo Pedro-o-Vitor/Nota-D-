@@ -13,7 +13,7 @@ export default function Header() {
     }
   };
 
-  return (
+  return (       
     <header style={styles.Header}>
       <h1 onClick={() => navigate("/home")} style={{ cursor: "pointer" }}>
         Nota 
@@ -36,7 +36,7 @@ export default function Header() {
 const styles = {
   Header: {
     padding: "20px",
-    backgroundColor: "black",
+    backgroundColor: "#1E1E1E",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -44,6 +44,7 @@ const styles = {
   },
 
   h1: {
+    backgroundColor:"white", 
     display: "flex", 
     justifyContent: "flex-start",
      alignItems: "center",
@@ -53,7 +54,7 @@ const styles = {
   form: {
     display: "flex",
     gap: "10px",
-    backgroundColor: "#000000",
+    backgroundColor: "#1E1E1E",
     flexWrap: "wrap",
     justifyContent: "center",
     width: "100%",
@@ -64,7 +65,7 @@ const styles = {
     padding: "8px 12px",
     fontSize: "1rem",
     borderRadius: "20p",
-    border: "4px solid #ccc",
+    backgroundColor:"#white",
     outline: "none",
     width: "50%",
     maxWidth: "400px",
@@ -76,9 +77,7 @@ const styles = {
     padding: "8px 16px",
     fontSize: "1rem",
     borderRadius: "4px",
-    border: "none",
-    backgroundColor: "#007bff",
-    color: "pink",
+    backgroundColor:"white",
     cursor: "pointer",
     minWidth: "100px",
   },

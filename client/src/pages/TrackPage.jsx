@@ -31,9 +31,9 @@ export default function TrackPage() {
       if (track?.title && track?.artist?.name) {
         try {
           const response = await axios.get(
-            `https://api.lyrics.ovh/v1/${track.artist.name}/${track.title}`
+            `/api/lyrics/${encodeURIComponent(track.artist.name)}/${encodeURIComponent(track.title)}`
           );
-          setLyrics(response.data.lyrics);
+          setLyrics(response.data.lyrics || "Letra não encontrada.");
         } catch (error) {
           setLyrics("Letra não encontrada.");
         }

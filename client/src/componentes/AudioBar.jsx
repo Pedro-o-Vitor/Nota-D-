@@ -1,22 +1,37 @@
 import { usePlayer } from "../context/PlayerContext";
-import { FaPlay, FaPause } from "react-icons/fa"; // ou outro pacote de ícones
+import { FaPlay, FaPause } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function AudioBar() {
   const { track, isPlaying, progress, playTrack, pause } = usePlayer();
+  const navigate = useNavigate();
 
-  if (!track) return null; // não renderiza se não tiver nenhuma música
+  if (!track) return null;
 
   return (
     <div style={styles.bar}>
-      <img
-        src={track.album.cover_small}
-        alt={track.title}
-        style={styles.cover}
-      />
-      <div style={styles.info}>
-        <span style={styles.title}>{track.title}</span>
-        <span style={styles.artist}>{track.artist.name}</span>
+      <div
+        style={styles.clickableInfo}
+        onClick={() => navigate(`/track/${track.id}`)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            navigate(`/track/${track.id}`);
+          }
+        }}
+      >
+        <img
+          src={track.album.cover_small}
+          alt={track.title}
+          style={styles.cover}
+        />
+        <div style={styles.info}>
+          <span style={styles.title}>{track.title}</span>
+          <span style={styles.artist}>{track.artist.name}</span>
+        </div>
       </div>
+      <div style={{display: "flex", float: "right", width: "100%", justifyContent: "flex-end", alignItems: "center"}}>
       <button
         onClick={() => (isPlaying ? pause() : playTrack(track))}
         style={styles.button}
@@ -24,7 +39,8 @@ export default function AudioBar() {
         {isPlaying ? <FaPause /> : <FaPlay />}
       </button>
       <div style={styles.progressContainer}>
-        <div style={{ ...styles.progress, width: `${progress}%` }} />
+        <div style={{ ...styles.progress, width: `${progress}%` }} > </div>
+      </div>
       </div>
     </div>
   );
@@ -37,12 +53,19 @@ const styles = {
     left: 0,
     right: 0,
     height: "60px",
-    backgroundColor: "#181818",
+    backgroundColor: "#1E1E1E",
     display: "flex",
     alignItems: "center",
     padding: "0 1rem",
     gap: "1rem",
     zIndex: 1000,
+  },
+  clickableInfo: {
+    display: "flex",
+    alignItems: "center",
+    gap: "1rem",
+    cursor: "pointer",
+    outline: "none",
   },
   cover: {
     width: "40px",
@@ -78,6 +101,8 @@ const styles = {
     backgroundColor: "#404040",
     borderRadius: "2px",
     overflow: "hidden",
+    padding: "0 1rem",
+    margin: "0px 0 0px 15px"
   },
   progress: {
     position: "absolute",
