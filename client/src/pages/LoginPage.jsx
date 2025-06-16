@@ -23,6 +23,9 @@ export default function LoginPage() {
     alert('Cadastro realizado com sucesso!');
     setPage('login');
     setForm({ email: '', password: '', username: '' }); // Reset form after registration
+    // Clear input fields explicitly to ensure no autofill
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => input.value = '');
   };
 
   const handleLogin = (e) => {
@@ -55,6 +58,7 @@ export default function LoginPage() {
               name="email"
               placeholder="Digite seu email"
               onChange={handleChange}
+              autoComplete="off"
               style={styles.input}
             />
             <input
@@ -62,6 +66,7 @@ export default function LoginPage() {
               name="password"
               placeholder="Digite sua senha"
               onChange={handleChange}
+              autoComplete="new-password"
               style={styles.input}
             />
             <button type="submit" style={styles.button}>Entrar</button>
@@ -77,6 +82,7 @@ export default function LoginPage() {
               name="username"
               placeholder="Digite seu nome de usuário"
               onChange={handleChange}
+              autoComplete="off"
               style={styles.input}
             />
             <input
@@ -84,6 +90,7 @@ export default function LoginPage() {
               name="email"
               placeholder="Digite seu email"
               onChange={handleChange}
+              autoComplete="off"
               style={styles.input}
             />
             <input
@@ -91,6 +98,7 @@ export default function LoginPage() {
               name="password"
               placeholder="Sua senha"
               onChange={handleChange}
+              autoComplete="new-password"
               style={styles.input}
             />
             <input type="submit" value="Criar conta" style={styles.submitInput} />
@@ -134,11 +142,12 @@ const styles = {
     padding: '12px',
     margin: '10px 0',
     backgroundColor: 'transparent',
-    border: '2px solid #1E1E1E',
+    border: '2px solid  #FFFFFF',
     borderRadius: '8px',
     color: 'white',
     outline: 'none',
-  },
+    fontFamily:"Roboto"
+    },
   submitInput: {
     backgroundColor: '#white',
     color: '#000000',

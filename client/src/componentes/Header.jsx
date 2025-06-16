@@ -15,9 +15,9 @@ export default function Header() {
 
   return (       
     <header style={styles.Header}>
-      <h1 onClick={() => navigate("/home")} style={{ cursor: "pointer" }}>
-        Nota 
-        Dó 
+      <h1 onClick={() => navigate("/home")} style={{ ...styles.h1, cursor: "pointer", display: "flex", alignItems: "center" }}>
+        <img src="/logo.png" alt="Logo" style={styles.logo} />
+        <span>Nota Dó</span>
       </h1>
       <form onSubmit={handleSubmit} className="search-form" style={styles.form}>
         <input
@@ -36,7 +36,7 @@ export default function Header() {
 const styles = {
   Header: {
     padding: "20px",
-    backgroundColor: "#1E1E1E",
+    backgroundColor: "black",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -44,17 +44,23 @@ const styles = {
   },
 
   h1: {
-    backgroundColor:"white", 
     display: "flex", 
     justifyContent: "flex-start",
-     alignItems: "center",
-      padding: "20px",  
+    alignItems: "center",
+    padding: "20px",  
+  },
+
+  logo: {
+    width: "40px",
+    height: "40px",
+    marginRight: "20px",   
+    borderRadius: "5px",
   },
 
   form: {
     display: "flex",
     gap: "10px",
-    backgroundColor: "#1E1E1E",
+    backgroundColor: "black",
     flexWrap: "wrap",
     justifyContent: "center",
     width: "100%",

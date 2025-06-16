@@ -6,31 +6,33 @@ export default function AudioBar() {
   const { track, isPlaying, progress, playTrack, pause } = usePlayer();
   const navigate = useNavigate();
 
-  if (!track) return null;
+  // if (!track) return null;
 
   return (
     <div style={styles.bar}>
-      <div
-        style={styles.clickableInfo}
-        onClick={() => navigate(`/track/${track.id}`)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            navigate(`/track/${track.id}`);
-          }
-        }}
-      >
-        <img
-          src={track.album.cover_small}
-          alt={track.title}
-          style={styles.cover}
-        />
-        <div style={styles.info}>
-          <span style={styles.title}>{track.title}</span>
-          <span style={styles.artist}>{track.artist.name}</span>
+      {track ? (
+        <div
+          style={styles.clickableInfo}
+          onClick={() => navigate(`/track/${track.id}`)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              navigate(`/track/${track.id}`);
+            }
+          }}
+        >
+          <img
+            src={track.album.cover_small}
+            alt={track.title}
+            style={styles.cover}
+          />
+          <div style={styles.info}>
+            <span style={styles.title}>{track.title}</span>
+            <span style={styles.artist}>{track.artist.name}</span>
+          </div>
         </div>
-      </div>
+      ) : null}
       <div style={{display: "flex", float: "right", width: "100%", justifyContent: "flex-end", alignItems: "center"}}>
       <button
         onClick={() => (isPlaying ? pause() : playTrack(track))}

@@ -57,20 +57,47 @@ app.get("/api/chart/global", async (req, res) => {
   }
 });
 
-
-
-// Endpoint to get lyrics by artist and title
 app.get("/api/lyrics/:artist/:title", async (req, res) => {
   const { artist, title } = req.params;
-  try {
-    const response = await axios.get(`https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}`);
-    if (response.data && response.data.lyrics) {
-      res.json({ lyrics: response.data.lyrics });
+
+  const fetchLyricsFromPrimary = async () => {
+    return await axios.get(`https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}`);
+  };
+
+  const fetchLyricsFromFallback = async () => {
+    const apiKey = process.env.VAGALUME_API_KEY || "YOUR_API_KEY_HERE";
+    const fallbackResponse = await axios.get(`https://api.vagalume.com.br/search.php?art=${encodeURIComponent(artist)}&mus=${encodeURIComponent(title)}&apikey=${apiKey}`);
+    if (fallbackResponse.data && fallbackResponse.data.type === "exact" && fallbackResponse.data.mus && fallbackResponse.data.mus.length > 0) {
+      const lyrics = fallbackResponse.data.mus[0].text;
+      return { data: { lyrics } };
     } else {
-      res.status(404).json({ lyrics: "Letra não encontrada." });
+      throw new Error("Fallback lyrics not found");
     }
+  };
+
+  try {
+    let response;
+    try {
+      response = await fetchLyricsFromPrimary();
+      if (response.data && response.data.lyrics) {
+        return res.json({ lyrics: response.data.lyrics });
+      }
+    } catch (primaryError) {
+      console.warn("Primary lyrics API failed, trying fallback...", primaryError.message);
+      response = await fetchLyricsFromFallback();
+      if (response.data && response.data.lyrics) {
+        return res.json({ lyrics: response.data.lyrics });
+      }
+    }
+    res.status(404).json({ lyrics: "Letra não encontrada." });
   } catch (error) {
-    res.status(500).json({ lyrics: "Erro ao buscar letra da música." });
+    if (error.response) {
+      console.error("Lyrics API error:", error.response.status, error.response.data);
+      res.status(error.response.status).json({ lyrics: error.response.data.error || "Erro ao buscar letra da música." });
+    } else {
+      console.error("Lyrics API error:", error.message);
+      res.status(500).json({ lyrics: "Erro ao buscar letra da música." });
+    }
   }
 });
 
