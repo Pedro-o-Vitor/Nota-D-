@@ -13,7 +13,7 @@ export default function TrackCard({ track }) {
 
     <div onClick={() => { playTrack(track); handleClick(); }} style={styles.card}>
       <img src={track.album.cover_medium} alt={track.title} style={styles.image} />
-      <p>{track.title}</p>
+      <p>{track.title}</p>                                
       
     </div>
     
@@ -24,12 +24,11 @@ const styles = {
   button:{
     borderRadius: "50%",
     padding: "1px",
-  
   },
   card: {
     cursor: "pointer",
     padding: "1rem",
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "Black",
     textAlign: "center",
     color: "white",
     fontFamily: "Arial",

@@ -3,41 +3,35 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import TrackCard from "./TrackCard";
+import axios from "axios";
 
-export default function MusicCarousel() {
+export default function MusicCarousel({ title, apiEndpoint }) {
   const [tracks, setTracks] = useState([]);
   const sliderRef = useRef(null);
 
   useEffect(() => {
     const fetchTracks = async () => {
       try {
-        const response = await fetch('/api/tracks');
-        const text = await response.text();
-        try {
-          const data = JSON.parse(text);
-          setTracks(data.data);
-        } catch (jsonError) {
-          console.error("Failed to parse JSON:", jsonError);
-          console.error("Response text:", text);
-        }
+        const response = await axios.get(apiEndpoint);
+        setTracks(response.data.data);
       } catch (error) {
-        console.error("Fetch error:", error);
+        console.error("Erro ao buscar músicas:", error);
       }
     };
-
     fetchTracks();
-  }, []);
+  }, [apiEndpoint]);
 
   const settings = {
     dots: false,
     infinite: true,
     speed: 400,
-    slidesToShow: 6,
+    slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: false,
     autoplaySpeed: 3000,
     pauseOnHover: false,
     pauseOnFocus: false,
+    // para adicionar reponsibilidade
     responsive: [
       {
         breakpoint: 1024,
@@ -56,7 +50,6 @@ export default function MusicCarousel() {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.heading}>Top Músicas no Deezer</h2>
       <Slider {...settings} ref={sliderRef}>
         {tracks.map((track) => (
           <TrackCard key={track.id} track={track} />
@@ -69,12 +62,7 @@ export default function MusicCarousel() {
 const styles = {
   container: {
     padding: "2rem",
-    backgroundColor: "#1E1E1E",
+    backgroundColor: "Black",
     color: "#fff"
   },
-  heading: {
-    textAlign: "center",
-    marginBottom: "1rem",
-    fontSize: "1.8rem"
-  }
 };

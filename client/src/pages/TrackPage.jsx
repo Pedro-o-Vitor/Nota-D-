@@ -1,37 +1,18 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function TrackPage() {
   const { id } = useParams(); // pega o id da URL
-  const [track, setTrack] = useState(null);
-
   const navigate = useNavigate();
-
-  const handleGoBack = () => {
-  navigate("/home");
-};
-
+  const [track, setTrack] = useState(null);
   const [lyrics, setLyrics] = useState("");
 
-useEffect(() => {
-  const fetchLyrics = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.lyrics.ovh/v1/${track.artist.name}/${track.title}`
-      );
-      setLyrics(response.data.lyrics);
-    } catch (error) {
-      setLyrics("Letra não encontrada.");
-    }
+  const handleGoBack = () => {
+    navigate("/home");
   };
 
-  if (track?.title && track?.artist?.name) {
-    fetchLyrics();
-  }
-}, [track]);
-
+  // 🎶 Buscar detalhes da música
   useEffect(() => {
     const fetchTrack = async () => {
       try {
@@ -41,63 +22,87 @@ useEffect(() => {
         console.error("Erro ao buscar detalhes da música:", error);
       }
     };
-
     fetchTrack();
   }, [id]);
+
+  // 📝 Buscar letra da música
+  useEffect(() => {
+    const fetchLyrics = async () => {
+      if (track?.title && track?.artist?.name) {
+        try {
+          const response = await axios.get(
+            `https://api.lyrics.ovh/v1/${track.artist.name}/${track.title}`
+          );
+          setLyrics(response.data.lyrics);
+        } catch (error) {
+          setLyrics("Letra não encontrada.");
+        }
+      }
+    };
+    fetchLyrics();
+  }, [track]);
 
   if (!track) {
     return <p style={{ color: "white" }}>Carregando música...</p>;
   }
 
   return (
-  <main>
-    <div style={styles.container}>
-      <h1>{track.title}</h1>
-      <h2>{track.artist.name}</h2>
-      <img src={track.album.cover_medium} alt="Capa do álbum" style={styles.cover} />
-    </div>
-    <div style={styles.letra}>
-    <h3>Letra</h3>
-      <pre style={{ whiteSpace: 'pre-wrap' }}>{lyrics}</pre>
-    </div>
-   </main>
+    <main style={styles.main}>
+      <button onClick={handleGoBack} style={styles.backButton}>
+        ⬅ Voltar para Home
+      </button>
+
+      <div style={styles.container}>
+        <img src={track.album.cover_medium} alt="Capa do álbum" style={styles.cover} />
+        <div>
+          <h1>{track.title}</h1>
+          <h2>{track.artist.name}</h2>
+        </div>
+      </div>
+
+
+      <div style={styles.lyricsBox}>
+        <h3>Letra</h3>
+        <pre style={{ whiteSpace: "pre-wrap" }}>{lyrics}</pre>
+      </div>
+    </main>
   );
 }
 
 const styles = {
+  main: {
+    padding: "20px",
+    color: "white",
+    display: "grid",
+    justifyContent: "center",
+  },
+  backButton: {
+    marginBottom: "15px",
+    padding: "8px 16px",
+    background: "#444",
+    color: "white",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+  },
   container: {
-    padding: "2rem",
-    textAlign:"center",
-    width: "43%"
-    [
-      { 
-        padding: "2rem",
-        textAlign: "center",
-        display: "block",
-      }
-    ]
-
+    display: "flex",
+    alignItems: "center",
+    gap: "20px",
   },
   cover: {
-    width: "20rem",
+    width: "200px",
     borderRadius: "10px",
-    margin: "1rem 0"
   },
   audio: {
-    marginTop: "1rem"
+    marginTop: "20px",
+    width: "100%",
   },
-   letra: {
-    padding: "2rem",
-    color: "#fff",
-    minHeight: "100vh",
-    textAlign: "center",
-    width: "45%"
-    [
-      { 
-        padding: "2rem",
-        textAlign: "center",
-        display: "block",
-      }
-    ]
-  }
+  lyricsBox: {
+    background: "#222",
+    padding: "15px",
+    borderRadius: "10px",
+    marginTop: "20px",
+    marginBottom: "50px",
+  },
 };
