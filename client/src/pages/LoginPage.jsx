@@ -163,7 +163,7 @@ const styles = {
     color: '#000',
     fontWeight: 'bold',
     cursor: 'pointer',
-    boxShadow: '0 0 10px #FF10F0',
+    boxShadow: '0 0 10px ',
     transition: '0.3s ease',
     margin: '10px',
   },

@@ -17,7 +17,7 @@ export default function Header() {
     <header style={styles.Header}>
       <h1 onClick={() => navigate("/home")} style={{ cursor: "pointer" }}>
         Nota 
-        Dó 🎵
+        Dó 
       </h1>
       <form onSubmit={handleSubmit} className="search-form" style={styles.form}>
         <input
@@ -43,6 +43,13 @@ const styles = {
     flexWrap: "wrap",
   },
 
+  h1: {
+    display: "flex", 
+    justifyContent: "flex-start",
+     alignItems: "center",
+      padding: "20px",  
+  },
+
   form: {
     display: "flex",
     gap: "10px",
@@ -51,17 +58,19 @@ const styles = {
     justifyContent: "center",
     width: "100%",
     maxWidth: "600px",
+    margin: "20px",
   },
   input: {
     padding: "8px 12px",
     fontSize: "1rem",
-    borderRadius: "20px",
+    borderRadius: "20p",
     border: "4px solid #ccc",
     outline: "none",
-    width: "100%",
+    width: "50%",
     maxWidth: "400px",
     justifyContent: "center",
     boxSizing: "border-box",
+
   },
   button: {
     padding: "8px 16px",

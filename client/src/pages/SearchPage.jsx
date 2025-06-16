@@ -24,9 +24,9 @@ export default function SearchPage() {
   return (
     <>
       <Header />
-      <div>
-        <h2>Resultados para: {query}</h2>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+      <div style={{backgroundColor: "BLACK", display: "flex", flexDirection: "column"}}>
+        <h2 style={{ marginLeft: "7rem", width: "50%" }} >Resultados para: {query}</h2>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
           {tracks.map((track) => (
             <TrackCard
               key={track.id}

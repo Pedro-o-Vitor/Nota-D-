@@ -27,7 +27,7 @@ export default function MusicCarousel({ title, apiEndpoint }) {
     speed: 400,
     slidesToShow: 4,
     slidesToScroll: 1,
-    autoplay: false,
+    autoplay: true ,
     autoplaySpeed: 3000,
     pauseOnHover: false,
     pauseOnFocus: false,
@@ -36,13 +36,15 @@ export default function MusicCarousel({ title, apiEndpoint }) {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2
+          slidesToShow: 2,
+          arrows: false
         }
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 1
+          slidesToShow: 1,
+          arrows: false
         }
       }
     ]
