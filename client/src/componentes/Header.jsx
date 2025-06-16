@@ -17,7 +17,7 @@ export default function Header() {
     <header style={styles.Header}>
       <h1 onClick={() => navigate("/home")} style={{ ...styles.h1, cursor: "pointer", display: "flex", alignItems: "center" }}>
         <img src="/logo.png" alt="Logo" style={styles.logo} />
-        <span>Nota Dó</span>
+        <span>Nota certa</span>
       </h1>
       <form onSubmit={handleSubmit} className="search-form" style={styles.form}>
         <input

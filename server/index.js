@@ -65,11 +65,9 @@ app.get("/api/lyrics/:artist/:title", async (req, res) => {
   };
 
   const fetchLyricsFromFallback = async () => {
-    const apiKey = process.env.VAGALUME_API_KEY || "YOUR_API_KEY_HERE";
-    const fallbackResponse = await axios.get(`https://api.vagalume.com.br/search.php?art=${encodeURIComponent(artist)}&mus=${encodeURIComponent(title)}&apikey=${apiKey}`);
-    if (fallbackResponse.data && fallbackResponse.data.type === "exact" && fallbackResponse.data.mus && fallbackResponse.data.mus.length > 0) {
-      const lyrics = fallbackResponse.data.mus[0].text;
-      return { data: { lyrics } };
+    const fallbackResponse = await axios.get(`https://lyrics-dr.vercel.app/api/lyrics/${encodeURIComponent(artist)}/${encodeURIComponent(title)}`);
+    if (fallbackResponse.data && fallbackResponse.data.lyrics) {
+      return { data: { lyrics: fallbackResponse.data.lyrics } };
     } else {
       throw new Error("Fallback lyrics not found");
     }

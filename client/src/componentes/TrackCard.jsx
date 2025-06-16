@@ -1,22 +1,41 @@
+
 import { useNavigate } from "react-router-dom";
 import { usePlayer } from "../context/PlayerContext";
+import { useState } from "react";
 
 export default function TrackCard({ track }) {
   const { playTrack, pause, isPlaying } = usePlayer();
   const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {
     navigate(`/track/${track.id}`);
   };
 
-  return (
+  const hoverStyle = isHovered
+    ? {
+        transform: "scale(1.05)",
+        boxShadow: "0 8px 16px rgba(255, 255, 255, 0.2)",
+        zIndex: 10,
+        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+      }
+    : {
+        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+      };
 
-    <div onClick={() => { playTrack(track); handleClick(); }} style={styles.card}>
+  return (
+    <div
+      onClick={() => {
+        playTrack(track);
+        handleClick();
+      }}
+      style={{ ...styles.card, ...hoverStyle }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <img src={track.album.cover_medium} alt={track.title} style={styles.image} />
-      <p>{track.title}</p>                                
-      
+      <p>{track.title}</p>
     </div>
-    
   );
 }
 
